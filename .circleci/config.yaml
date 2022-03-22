@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello - Testing 2"
-          command: "echo Hello, World! - 56"
+          command: "echo Hello, World! - 568"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
