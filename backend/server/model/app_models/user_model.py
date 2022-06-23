@@ -1,5 +1,6 @@
+from datetime import datetime
 from email.policy import default
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
 from database.connection import Base
@@ -17,5 +18,6 @@ class User(Base):
     phone_number = Column(String)
     country = Column(String, default=None)
     gender = Column(String, default=None)
-    DOB = Column(String)
+    DOB = Column(String, default=None)
+    created_at = Column(DateTime, default=datetime.utcnow)
 

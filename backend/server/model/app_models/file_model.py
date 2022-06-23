@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from database.connection import Base
 
 
-class User(Base):
+class File(Base):
     __tablename__ = "files"
 
     id = Column(Integer, primary_key=True, index=True)

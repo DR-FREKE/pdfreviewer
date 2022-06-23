@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
-from typing import Optional
+from typing import Any, Optional
 from dependencies import get_header_token
 from fastapi.security import HTTPBearer
-from model.usermodel.user_schema import UserCreate, UserBase
+from model.app_schema.user_schema import UserCreate, UserBase
 
 token_auth_scheme: HTTPBearer = HTTPBearer()
 
@@ -17,8 +17,10 @@ fake_items_db = {"plumbus": {"name": "Plumbus"}, "gun": {"name": "Portal Gun"}}
 
 
 @router.get("/")
-async def home(item: UserCreate):
-    return {"message": item}
+async def home(item: UserCreate) ->Any:
+    if not item:
+        raise HTTPException(status_code = 404, detail=f"{item} should be provided")
+    return {**item.dict()}
 
 
 @router.get("/{username}")
