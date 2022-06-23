@@ -1,3 +1,4 @@
+import email
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session;
 
@@ -9,10 +10,19 @@ from model.app_schema.user_schema import UserCreate
 class RegisterController:
 
     @classmethod
-    async def save(cls, user_instance):
-        pass
+    async def save(cls, db, user_instance):
+        try:
+            db.add(user_instance);
+            db.commit();
+            db.refresh(user_instance)
+        except:
+            db.rollback();
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @classmethod
     async def addUser(cls, db: Session, user: UserCreate):
-        return {"message":user.password}
-        # return db.query(models.User).offset(skip).limit(limit).all()
+        hashed_password = user.password+"shouldbehashed";
+        new_user = models.User(email=user.email, hashed_password=hashed_password);
+        
+        await cls.save(db, new_user);
+        return new_user

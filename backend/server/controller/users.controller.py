@@ -5,5 +5,7 @@ from model.app_schema import user_schema
 
 @dataclass
 class UserController:
-    def get_users(self, db: Session, skip: int = 0, limit: int = 30):
+
+    @classmethod
+    async def get_users(self, db: Session, skip: int = 0, limit: int = 30):
         return db.query(models.User).offset(skip).limit(limit).all()
