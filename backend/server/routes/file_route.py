@@ -7,14 +7,13 @@ from model.app_schema.user_schema import UserCreate, User
 
 
 router = APIRouter(
-    prefix="/auth",
-    tags=["auth"],
+    prefix="/file",
+    tags=["file"],
     # dependencies=[Depends(get_db)],
     responses={404: {"description": "Not Found"}}
 )
 
-@router.post("/sign-up/")
-async def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    register = await reg.addUser(db=db, user=user)
-    return register
+@router.post("/upload-pdf/")
+async def add_pdf():
+    return {"message":"This endpoint allows you upload your pdf"};
     

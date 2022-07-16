@@ -1,5 +1,4 @@
 from datetime import datetime
-from email.policy import default
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
@@ -20,4 +19,6 @@ class User(Base):
     gender = Column(String, default=None)
     DOB = Column(String, default=None)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    files = relationship("File", back_populates="owner")
 

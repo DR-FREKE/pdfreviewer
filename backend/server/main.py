@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from model.app_models import user_model
 from database.connection import engine
 from dependencies import get_header_token, get_query_token
-from routes import user_route, auth_route
+from routes import user_route, auth_route, file_route
 
 app = FastAPI()
 # app = FastAPI(dependencies=[Depends(get_query_token)]) ## use when you've setup token
@@ -35,6 +35,7 @@ app.add_middleware(
 
 app.include_router(user_route.router, prefix="/api/v1", tags=["users"])
 app.include_router(auth_route.router, prefix="/api/v1", tags=["auth"])
+app.include_router(file_route.router, prefix="/api/v1", tags=["file"])
 
 
 @app.get("/")

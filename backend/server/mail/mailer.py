@@ -14,16 +14,20 @@ class Mailer:
         MAIL_USERNAME = env.get("MAIL_USERNAME"),
         MAIL_PASSWORD = env.get("MAIL_PASSWORD"),
         MAIL_FROM = env.get("MAIL_FROM"),
-        MAIL_PORT = env.get("MAIL_PORT"),
+        MAIL_PORT = int(env.get("MAIL_PORT")),
         MAIL_SERVER = env.get("MAIL_SERVER"),
-        MAIL_TLS = env.get("MAIL_TLS"),
-        MAIL_SSL = env.get("MAIL_SSL"),
-        TEMPLATE_FOLDER = Path(__file__).parent / 'views'
+        MAIL_TLS = True,
+        MAIL_SSL = False,
+        # USE_CREDENTIALS = True,
+        # VALIDATE_CERTS = True
+        # TEMPLATE_FOLDER = Path(__file__).parent / 'views'
     )
 
     @classmethod
-    async def sendMail(cls, email, body=None) -> dict:
-        message: MessageSchema = MessageSchema(subject="From Benkaf", recipient=email, template_body=body);
+    async def sendMail(cls, email: str, body: dict=None) -> dict:
+        html = """<p>Hi this test mail, thanks for using Fastapi-mail</p>""";
+
+        message: MessageSchema = MessageSchema(subject="From Benkaf", recipients=[email], body=body, subtype="html");
         fm = FastMail(cls.config)
         await fm.send_message(message, template_name="signup_email_template.html")
 
